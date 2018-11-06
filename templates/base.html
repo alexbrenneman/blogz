@@ -1,12 +1,13 @@
 <!doctype html>
 <html>
     <head>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
         <title>{{title}}</title>
     </head>
 <body>
         <nav>
-            <a href="/blog">Main Blog</a>
-            <a href="/newpost">Make a new post</a>
+            <a href="/blog" id=nav1><strong>Main Blog</strong></a>
+            <a href="/newpost" id="nav2"><strong>Make a new post</strong></a>
         </nav>
 
     {% block content %}

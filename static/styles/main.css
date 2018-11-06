@@ -1,0 +1,29 @@
+h1{
+    text-align: center;
+}
+
+#nav2{
+    font-size: 20px;
+    padding: 15px;
+}
+
+#nav1{
+    font-size: 20px;
+    padding: 15px;
+}
+
+label{
+    font-size: 25px;
+    padding-left: 450px;
+}
+
+#title_box{
+    padding-left: 640px;
+}
+
+#post_button{
+    margin-left: 750px;
+    height: 30px;
+    width: 75px;
+}
+
