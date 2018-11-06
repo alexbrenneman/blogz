@@ -5,13 +5,16 @@
         <title>{{title}}</title>
     </head>
 <body>
+    
         <nav>
             <a href="/blog" id=nav1><strong>Main Blog</strong></a>
             <a href="/newpost" id="nav2"><strong>Make a new post</strong></a>
         </nav>
-
+        <div class="body">
     {% block content %}
     {% endblock %}
+
+        </div>
 
 </body>
 </html>

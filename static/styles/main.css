@@ -5,11 +5,13 @@ h1{
 #nav2{
     font-size: 20px;
     padding: 15px;
+    margin-left: 400px;
 }
 
 #nav1{
     font-size: 20px;
     padding: 15px;
+    margin-left: 500px;
 }
 
 label{
@@ -22,8 +24,60 @@ label{
 }
 
 #post_button{
-    margin-left: 750px;
+    margin-left: 500px;
     height: 30px;
     width: 75px;
 }
+
+ul {
+    list-style-type: none;
+    padding: 20px;
+    text-align: center;
+    
+}
+
+li{
+    padding: 20px;
+}
+
+
+
+.body{
+    background-color: rgb(202, 202, 202);
+    margin-top: 50px;
+    margin-left: 300px;
+    margin-right: 300px;
+
+    
+     
+}
+
+
+body{
+    background-color: rgb(179, 179, 179);
+}
+
+a:hover{
+    background-color: rgb(110, 100, 103)
+}
+
+#title_box{
+    padding-left: 375px;
+}
+
+#body_feild{
+    padding-left: 0px;
+}
+
+#bfield{
+    padding-left: 305px;
+    
+}
+
+p{
+    text-align: center;
+}
+
+
+
 
