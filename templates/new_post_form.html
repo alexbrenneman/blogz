@@ -2,13 +2,13 @@
 
 {% block content %}
 <h1>What would you like to share?</h1>
-<form action="/new_post" method='POST'>
+<form action="/newpost" method='POST'>
     <label for="title_field">Give it a name</label>
-    <input type="text" id='title_field' value="{{new_post_title}}">
+    <input type="text" name='title_field' value="{{new_post_title}}">
 
     <label for="body_field">Say what ya gotta say!</label>
     <textarea name="body" id="body_field" cols="50" rows="4">{{new_post_body}}</textarea>
-    <input type="submit" id="submit_button" value="Post">
+    <input type="submit" name="submit_button" value="Post">
 
 
 </form>

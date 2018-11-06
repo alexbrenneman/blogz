@@ -49,7 +49,7 @@ def main_page():
 @app.route('/newpost', methods= ['GET','POST'])
 def new_post():
     if request.method == "POST":
-        new_post_title = request.form['title']
+        new_post_title = request.form["title_field"]
         new_post_body = request.form['body']
         new_post = Post(new_post_title, new_post_body)
 
