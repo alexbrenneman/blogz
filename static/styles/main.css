@@ -5,26 +5,26 @@ h1{
 #nav2{
     font-size: 20px;
     padding: 15px;
-    margin-left: 400px;
+    
 }
 
 #nav1{
     font-size: 20px;
     padding: 15px;
-    margin-left: 500px;
+    
 }
 
 label{
     font-size: 25px;
-    padding-left: 450px;
+    margin-left: 200px;
 }
 
 #title_box{
-    padding-left: 640px;
+    
 }
 
 #post_button{
-    margin-left: 500px;
+    margin-left: 400px;
     height: 30px;
     width: 75px;
 }
@@ -47,6 +47,7 @@ li{
     margin-top: 50px;
     margin-left: 300px;
     margin-right: 300px;
+    width: 900px ;
 
     
      
@@ -62,15 +63,15 @@ a:hover{
 }
 
 #title_box{
-    padding-left: 375px;
+    
 }
 
 #body_feild{
-    padding-left: 0px;
+ 
 }
 
 #bfield{
-    padding-left: 305px;
+    
     
 }
 
