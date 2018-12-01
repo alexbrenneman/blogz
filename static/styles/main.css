@@ -19,10 +19,6 @@ label{
     margin-left: 200px;
 }
 
-#title_box{
-    
-}
-
 #post_button{
     margin-left: 400px;
     height: 30px;
@@ -40,19 +36,13 @@ li{
     padding: 20px;
 }
 
-
-
 .body{
     background-color: rgb(202, 202, 202);
     margin-top: 50px;
     margin-left: 300px;
     margin-right: 300px;
-    width: 900px ;
-
-    
-     
+    width: 900px ;    
 }
-
 
 body{
     background-color: rgb(179, 179, 179);
@@ -62,27 +52,9 @@ a:hover{
     background-color: rgb(110, 100, 103)
 }
 
-#title_box{
-    
-}
-
-#body_feild{
- 
-}
-
-#bfield{
-    
-    
-}
-
 p{
     text-align: center;
 }
-
-
-
-
-
 
 main {
     display: flex;
