@@ -8,13 +8,13 @@
 <br>
 <form action="/newpost" method='POST'>
     <label for="title_field" id=title_box>Give it a name:</label>
-    <input type="text" name='title_field' value="{{new_post_title}}">
+    <input type="text" name='title_field' value="{{new_post_title}}"><span style="color: #ff0000">{{title_error_message}}</span>
 <br>
 <br>
 <br>
 <br>
     <label for="body_field" id="bfield">Say what ya gotta say:</label>
-    <textarea name="body" id="body_field" cols="30" rows="2">{{new_post_body}}</textarea>
+    <textarea name="body" id="body_field" cols="30" rows="2">{{new_post_body}}</textarea> <span style="color: #ff0000">{{body_error_message}}</span>
     <br>
     <br>
     <br>

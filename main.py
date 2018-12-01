@@ -22,12 +22,6 @@ class Post(db.Model):
         self.body = body
         self.created = datetime.utcnow()
 
-    def valid(self):
-        if self.title and self.body and self.created: 
-            return True
-        else:
-            return False
-
 
 @app.route('/', methods=['GET'])
 def index():
@@ -48,25 +42,28 @@ def main_page():
 
 @app.route('/newpost', methods= ['GET','POST'])
 def new_post():
+    title_error_message = ""
+    body_error_message = ""
     if request.method == "POST":
+   
         new_post_title = request.form["title_field"]
         new_post_body = request.form['body']
         new_post = Post(new_post_title, new_post_body)
+        if len(new_post_title) < 1:
+            title_error_message = 'Please provide a post title.'
+        if len(new_post_body) < 1:
+            body_error_message ='Please provide a post body.'
 
-        if new_post.valid():
+
+        if not (title_error_message or body_error_message):
             db.session.add(new_post)
             db.session.commit()
             url = '/blog?id=' + str(new_post.id)
             return redirect(url)
 
-        else:
-            flash("Somethings not right. You better fix it.") 
-            return render_template('new_post_form.html',)
-            title="Make a new blog post",
-            new_post_title=new_post_title,
-            new_post_body=new_post_body
-    else:
-        return render_template('new_post_form.html', title="Make a new blog post.")
+        
+    
+    return render_template('new_post_form.html', title = "Make a new blog post." , title_error_message = title_error_message , body_error_message = body_error_message) 
 
 if __name__ == '__main__':
     app.run()
