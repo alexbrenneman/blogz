@@ -61,10 +61,10 @@ def new_post():
 
         else:
             flash("Somethings not right. You better fix it.") 
-            return render_template('new_post_form.html',
+            return render_template('new_post_form.html',)
             title="Make a new blog post",
             new_post_title=new_post_title,
-            new_post_body=new_post_body)
+            new_post_body=new_post_body
     else:
         return render_template('new_post_form.html', title="Make a new blog post.")
 

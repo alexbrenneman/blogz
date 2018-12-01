@@ -79,5 +79,20 @@ p{
 }
 
 
+.container {
+    margin-left: 3rem;
+}
 
+.flash_message {
+    background-color: MistyRose;
+    border-radius: 2px;
+    color: red;
+    margin: .25rem;
+    padding: 2rem;
+}
+
+main {
+    display: flex;
+    justify-content: flex-start;
+}
 
