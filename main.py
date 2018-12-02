@@ -103,7 +103,7 @@ def signup():
 
         existing_user = User.query.filter_by(username=username).first()
         if not existing_user:
-            new_user = User(username, password)
+            new_user = User(username = username, password = password)
             db.session.add(new_user)
             db.session.commit()
             session['username'] = username
@@ -113,6 +113,38 @@ def signup():
             return "<h1>Duplicate user</h1>"
 
     return render_template('signup.html')
+
+def length():
+    if len(password) > 3:
+        return True
+    else:
+        return False
+    if len(username) > 3:
+        return True
+    else:
+        return False
+
+def validation():   
+
+    username = request.form['username']
+    password = request.form['password']
+    verifypassword = request.form['verifypassword']
+ 
+    if length(username):
+        valid_username = ""
+    else:
+        valid_username = "Not a valid username"
+    
+    if length(password) and password == verifypassword:
+        valid_password = ""
+    else: 
+        valid_password = "Not a valid password"
+
+    if valid_username=="" and valid_password=="":
+        return redirect('/newpost?username='+username)
+    else:
+        return render_template('/signup')(username=username, valid_username=valid_username, valid_password=valid_password)
+
 
 
 
