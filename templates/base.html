@@ -16,6 +16,13 @@
             <a href="/login" id='nav3'><strong>Login</strong></a>
         </nav>
         <div class="body">
+                <div class="container">
+                        
+                        {% with messages = get_flashed_messages() %}
+                            {% for message in messages %}
+                                <div class="flash_message">{{message|safe}}</div>
+                            {% endfor %}
+            {% endwith %}
     {% block content %}
     {% endblock %}
 
