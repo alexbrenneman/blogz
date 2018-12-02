@@ -1,11 +1,11 @@
-from flask import Flask, request, redirect, render_template, flash
+from flask import Flask, request, redirect, render_template, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog-2:buildablog@localhost:8889/build-a-blog-2'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogz:blogz@localhost:8889/blogz'
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 app.secret_key = 'f8wv3w2f>v9j4sEuhcNYydAGMzzZJgkGgyHE9gUqaJcCk^f*^o7fQyBT%XtTvcYM'
@@ -16,11 +16,14 @@ class Post(db.Model):
     title = db.Column(db.String(120))
     body = db.Column(db.String(1000))
     created = db.Column(db.DateTime)
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __init__(self, title, body):
+
+    def __init__(self, title, body, owner):
         self.title = title
         self.body = body
         self.created = datetime.utcnow()
+        self.owner = owner
 
 
 @app.route('/', methods=['GET'])
@@ -48,7 +51,9 @@ def new_post():
    
         new_post_title = request.form["title_field"]
         new_post_body = request.form['body']
-        new_post = Post(new_post_title, new_post_body)
+        owner = User.query.filter_by(username=session['username']).first()
+        new_post = Post(new_post_title, new_post_body, owner)
+        
         if len(new_post_title) < 1:
             title_error_message = 'Please provide a post title.'
         if len(new_post_body) < 1:
@@ -64,6 +69,52 @@ def new_post():
         
     
     return render_template('new_post_form.html', title = "Make a new blog post." , title_error_message = title_error_message , body_error_message = body_error_message) 
+
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(120), unique=True)
+    password = db.Column(db.String(120))
+    blogs = db.relationship('Post', backref='owner')
+
+
+
+@app.route('/login', methods= (['GET','POST']))
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = User.query.filter_by(username=username).first()
+        if user and user.password == password:
+            session['username'] = username 
+            flash("Logged in")
+            return redirect('/')
+        else:
+            flash('User password incorrect, or user does not exist', 'error')
+
+    return render_template('login.html')
+
+@app.route('/signup', methods=['POST', 'GET'])
+def signup():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        verify = request.form['verify']
+
+        existing_user = User.query.filter_by(username=username).first()
+        if not existing_user:
+            new_user = User(username, password)
+            db.session.add(new_user)
+            db.session.commit()
+            session['username'] = username
+            return redirect('/newpost')
+        else:
+           
+            return "<h1>Duplicate user</h1>"
+
+    return render_template('signup.html')
+
+
 
 if __name__ == '__main__':
     app.run()
