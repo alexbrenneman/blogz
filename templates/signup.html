@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Register to Get It Done!</h1>
+<h1>Register to Blogz!</h1>
 <form  method="post">
     <table>
         <tr>
             <td><label for="username">Username</label></td>
             <td>
-                <input name="username" type="username" value="{{ username }}">
+                <input name="username" type="username" value="{{username}}" ><span style="color: #ff0000">{{valid_username}}</span>
             </td>
         </tr>
         <tr>
@@ -19,7 +19,7 @@
         <tr>
             <td><label for="verify">Verify Password</label></td>
             <td>
-                <input name="verify" type="password"><span style="color: #ff0000">{{valid_username}}</span>
+                <input name="verify" type="password"><span style="color: #ff0000">{{valid_password}}</span>
             </td>
         </tr>
     </table>

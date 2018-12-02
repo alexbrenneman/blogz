@@ -81,23 +81,30 @@ class User(db.Model):
 
 @app.route('/login', methods= (['GET','POST']))
 def login():
+    valid_username  = ''
+    valid_password = ''
+    username = ''
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
         if user and user.password == password:
             session['username'] = username 
-            flash("Logged in")
-            return redirect('/')
-        else:
-            flash('User password incorrect, or user does not exist', 'error')
+            return redirect('/newpost')
+        if not user  == user:
+            valid_username = "Not a valid username"
+        if user and not user.password == password:
+            valid_password = "Not a valid password"
+        
+    
 
-    return render_template('login.html')
+    return render_template('login.html', valid_username=valid_username, username=username , valid_password=valid_password)
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
     valid_username  = ''
     valid_password = ''
+    username = ''
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -106,10 +113,10 @@ def signup():
         existing_user = User.query.filter_by(username=username).first()
         if not existing_user:
 
-            if len(username) < 3:
+            if len(username) < 4:
                 valid_username = "Not a valid username"
             
-            if len(password) < 3 or password != verify:
+            if len(password) < 4 or password != verify:
                 valid_password = "Not a valid password"
 
             if valid_username=="" and valid_password=="":
@@ -119,11 +126,10 @@ def signup():
                 session['username'] = username
                 return redirect('/newpost')
                 
-            else:
-           
-                valid_username = 'Duplicate user'
+        else:
+            valid_username = 'Duplicate user'
 
-    return render_template('signup.html', username=username, valid_username=valid_username, valid_password=valid_password)
+    return render_template('signup.html', valid_username=valid_username, username=username , valid_password=valid_password)
 
 
     
@@ -133,11 +139,11 @@ def logout():
     return redirect('/')
 
 
-@app.before_request
+'''@app.before_request
 def require_login():
     allowed_routes = ['login', 'signup', 'index', 'main_page']
     if request.endpoint not in allowed_routes and 'email' not in session:
-        return redirect('/login')
+        return redirect('/login')'''
 
 
 if __name__ == '__main__':
