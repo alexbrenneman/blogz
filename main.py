@@ -49,6 +49,8 @@ def main_page():
         all_posts = Post.query.all()
         return render_template('all_posts.html', title='All Posts', all_posts=all_posts)
 
+        
+
 @app.route('/newpost', methods= ['GET','POST'])
 def new_post():
     title_error_message = ""
@@ -151,9 +153,11 @@ def logout():
     del session['username']
     return redirect('/')
 
-@app.route('/', methods=['GET'])
+@app.route("/")
 def index():
-    return redirect('/blog')
+    users = User.query.all()
+    return render_template('index.html', users=users)
+
 
 
 
