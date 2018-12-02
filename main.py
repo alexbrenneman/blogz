@@ -96,6 +96,8 @@ def login():
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
+    valid_username  = ''
+    valid_password = ''
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -103,49 +105,39 @@ def signup():
 
         existing_user = User.query.filter_by(username=username).first()
         if not existing_user:
-            new_user = User(username = username, password = password)
-            db.session.add(new_user)
-            db.session.commit()
-            session['username'] = username
-            return redirect('/newpost')
-        else:
+
+            if len(username) < 3:
+                valid_username = "Not a valid username"
+            
+            if len(password) < 3 or password != verify:
+                valid_password = "Not a valid password"
+
+            if valid_username=="" and valid_password=="":
+                new_user = User(username = username, password = password)
+                db.session.add(new_user)
+                db.session.commit()
+                session['username'] = username
+                return redirect('/newpost')
+                
+            else:
            
-            return "<h1>Duplicate user</h1>"
+                valid_username = 'Duplicate user'
 
-    return render_template('signup.html')
+    return render_template('signup.html', username=username, valid_username=valid_username, valid_password=valid_password)
 
-def length():
-    if len(password) > 3:
-        return True
-    else:
-        return False
-    if len(username) > 3:
-        return True
-    else:
-        return False
 
-def validation():   
-
-    username = request.form['username']
-    password = request.form['password']
-    verifypassword = request.form['verifypassword']
- 
-    if length(username):
-        valid_username = ""
-    else:
-        valid_username = "Not a valid username"
     
-    if length(password) and password == verifypassword:
-        valid_password = ""
-    else: 
-        valid_password = "Not a valid password"
-
-    if valid_username=="" and valid_password=="":
-        return redirect('/newpost?username='+username)
-    else:
-        return render_template('/signup')(username=username, valid_username=valid_username, valid_password=valid_password)
+@app.route('/logout')
+def logout():
+    del session['username']
+    return redirect('/')
 
 
+@app.before_request
+def require_login():
+    allowed_routes = ['login', 'signup', 'index', 'main_page']
+    if request.endpoint not in allowed_routes and 'email' not in session:
+        return redirect('/login')
 
 
 if __name__ == '__main__':
