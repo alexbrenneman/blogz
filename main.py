@@ -26,12 +26,18 @@ class Post(db.Model):
         self.owner = owner
 
 
-@app.route('/', methods=['GET'])
-def index():
-    return redirect('/blog')
 
 @app.route('/blog', methods=['GET'])
 def main_page():
+    user_id = request.args.get('user')
+    if user_id:
+        posts = Post.query.filter_by(owner_id=user_id).all()
+        user = User.query.filter_by(id=user_id).first()
+        if user:
+            username = user.username
+        else:
+            username = ""
+        return render_template('singleUser.html', title = username, posts=posts)
     post_id = request.args.get('id')
     if (post_id):
         post = Post.query.get(post_id)
@@ -41,7 +47,7 @@ def main_page():
         all_posts = Post.query.order_by(Post.created.desc()).all()
     else:
         all_posts = Post.query.all()
-    return render_template('all_posts.html', title='All Posts', all_posts=all_posts)
+        return render_template('all_posts.html', title='All Posts', all_posts=all_posts)
 
 @app.route('/newpost', methods= ['GET','POST'])
 def new_post():
@@ -78,6 +84,13 @@ class User(db.Model):
     blogs = db.relationship('Post', backref='owner')
 
 
+@app.before_request
+def require_login():
+    allowed_routes = ['login', 'signup', 'index', 'main_page']
+    if request.endpoint not in allowed_routes and 'username' not in session:
+        return redirect('/login')
+
+
 
 @app.route('/login', methods= (['GET','POST']))
 def login():
@@ -91,7 +104,7 @@ def login():
         if user and user.password == password:
             session['username'] = username 
             return redirect('/newpost')
-        if not user  == user:
+        if not user:
             valid_username = "Not a valid username"
         if user and not user.password == password:
             valid_password = "Not a valid password"
@@ -138,12 +151,13 @@ def logout():
     del session['username']
     return redirect('/')
 
+@app.route('/', methods=['GET'])
+def index():
+    return redirect('/blog')
 
-'''@app.before_request
-def require_login():
-    allowed_routes = ['login', 'signup', 'index', 'main_page']
-    if request.endpoint not in allowed_routes and 'email' not in session:
-        return redirect('/login')'''
+
+
+
 
 
 if __name__ == '__main__':
